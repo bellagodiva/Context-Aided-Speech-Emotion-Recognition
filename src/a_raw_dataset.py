@@ -90,16 +90,7 @@ def get_emotion2id(DATASET: str) -> Tuple[dict, dict]:
             "angry",
             "happy",
         ]
-        '''
-        emotions = [
-            "neutral",
-            "frustration",
-            "sadness",
-            "anger",
-            "excited",
-            "happiness",
-        ]
-        '''
+       
         emotion2id = {emotion: idx for idx, emotion in enumerate(emotions)}
         id2emotion = {val: key for key, val in emotion2id.items()}
 
@@ -181,13 +172,13 @@ class Multimodal_Datasets(torch.utils.data.Dataset):
             text = json.load(stream)
 
         #transcriptions
-        ##if uttid in self.utterance_transcriptions.item():
-            ##utterance = self.utterance_transcriptions.item()[uttid].strip()
-        ##else:
-            ##utterance='BLANK'
+        if uttid in self.utterance_transcriptions.item():
+            utterance = self.utterance_transcriptions.item()[uttid].strip()
+        else:
+            utterance='BLANK'
         #raw
-        utterance = text["Utterance"].strip()
-        emotion = text["Emotion"] #del this later
+        ##utterance = text["Utterance"].strip()
+        ##emotion = text["Emotion"] #del this later
 
         if self.DATASET == "MELD":
             speaker = text["Speaker"]
@@ -252,9 +243,6 @@ class Multimodal_Datasets(torch.utils.data.Dataset):
                 audio_raw = np.array(y)
                 label = self.emotion2id[emotion_labels[uttid]]
                 label = [label]
-                #temp_label=torch.zeros(4)
-                #temp_label[label]=1
-                #label= temp_label #one hot encoded
 
                 indexes = [idx]
                 indexes_past = [
@@ -339,9 +327,9 @@ class Multimodal_Datasets(torch.utils.data.Dataset):
                     "attention_mask": attention_mask,
                 }
 
-                #inputs.append(input_)
+          
                 inputs.append({"text": text_input, "audio_raw":audio_raw, "label":label})
-                #inputs.append({"text": text_input, "audio": aus[idx], "visual": vis[idx], "label":label})
+                
 
         logging.info("number of truncated utterances: " + str(num_truncated))
         return inputs
@@ -363,16 +351,11 @@ class Multimodal_Datasets(torch.utils.data.Dataset):
             num_future_utterances=self.num_future_utterances,
         )
 
-    def __getitem__(self, index):
-        # X = (self._inputs[index]['text'], self._inputs[index]['audio'], self._inputs[index]['visual'])
-        # Y = self._inputs[index]['label']
-        # return X, Y 
+    def __getitem__(self, index): 
         return {
             'source': {
                 'text_inputids': torch.LongTensor(self._inputs[index]['text']['input_ids']),
-                # 'text_mask': torch.BoolTensor(self._inputs[index]['text']['attention_mask']),
-                'audio_raw': torch.Tensor(self._inputs[index]['audio_raw']),
-                #'visual': torch.Tensor(self._inputs[index]['visual']),
+                'audio_raw': torch.Tensor(self._inputs[index]['audio_raw'])
             },
             'target': self._inputs[index]['label']
         }
@@ -424,11 +407,7 @@ class Multimodal_Datasets(torch.utils.data.Dataset):
         audio_source = [s['source']['audio_raw'] for s in samples]
         audio_sizes = torch.LongTensor([len(s) for s in audio_source])
         audio_raw, audio_mask = self.collater_modal(audio_source, audio_sizes)
-        '''
-        visual_source = [s['source']['visual'] for s in samples]
-        visual_sizes = torch.LongTensor([len(s) for s in visual_source])
-        visual, visual_mask = self.collater_modal(visual_source, visual_sizes)
-        '''
+        
         text_source = [s['source']['text_inputids'] for s in samples]
         text_sizes = torch.LongTensor([len(s) for s in text_source])
         text, text_mask = self.collater_modal(text_source, text_sizes, pad_value=0)
@@ -438,9 +417,7 @@ class Multimodal_Datasets(torch.utils.data.Dataset):
                 'text_inputids': text,
                 'text_mask': text_mask,
                 'audio_raw': audio_raw,
-                'audio_mask': audio_mask,
-                #'visual': visual,
-                #'visual_mask': visual_mask,
+                'audio_mask': audio_mask
             },
             'target': torch.Tensor([s['target'] for s in samples])
         }
