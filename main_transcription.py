@@ -14,16 +14,10 @@ parser.add_argument('--model', type=str, default='MulT',
                     help='name of the model to use (Transformer, etc.)')
 
 # Tasks
-parser.add_argument('--vonly', action='store_true',
-                    help='use the crossmodal fusion into v (default: False)')
-parser.add_argument('--aonly', action='store_true',
-                    help='use the crossmodal fusion into a (default: False)')
 parser.add_argument('--dataset', type=str, default='IEMOCAP',
                     help='dataset to use (default: mosei_senti)')
-parser.add_argument('--data_path', type=str, default='/mnt/bellago/mt_data',
-                    help='path for storing the dataset')
 
-# Roberta
+# RoBERTa
 parser.add_argument('--speaker_mode', type=str, default='upper',
                     help='roberta speaker name in capital')
 parser.add_argument('--num_past_utterances', type=int, default=0,
@@ -36,19 +30,7 @@ parser.add_argument('--root_dir', type=str, default="/mnt/hard2/bella",
                     help='roberta speaker name in capital')
 
             
-# Dropouts
-parser.add_argument('--attn_dropout', type=float, default=0.25,
-                    help='attention dropout')
-parser.add_argument('--attn_dropout_a', type=float, default=0.45,
-                    help='attention dropout (for audio)')
-parser.add_argument('--attn_dropout_v', type=float, default=0.45,
-                    help='attention dropout (for visual)')
-parser.add_argument('--relu_dropout', type=float, default=0.3,
-                    help='relu dropout')
-parser.add_argument('--embed_dropout', type=float, default=0.25,
-                    help='embedding dropout')
-parser.add_argument('--res_dropout', type=float, default=0.2,
-                    help='residual block dropout')
+# Dropouts for Classifier
 parser.add_argument('--out_dropout', type=float, default=0.2,
                     help='output layer dropout')
 
