@@ -80,24 +80,13 @@ parser.add_argument('--log_interval', type=int, default=30,
                     help='frequency of result logging (default: 30)')
 parser.add_argument('--seed', type=int, default=42,
                     help='random seed')
-#parser.add_argument('--no_cuda', action='store_true',
-                    #help='do not use cuda')
 parser.add_argument('--name', type=str, default='mulerc_1',
                     help='name of the trial (default: "mult")')
 args = parser.parse_args()
 
 torch.manual_seed(args.seed)
 dataset=args.dataset
-#dataset = str.lower(args.dataset.strip())
-#valid_partial_mode = args.lonly + args.vonly + args.aonly
 valid_partial_mode = args.vonly + args.aonly
-
-'''
-if valid_partial_mode == 0:
-    args.lonly = args.vonly = args.aonly = True
-elif valid_partial_mode != 1:
-    raise ValueError("You can only choose one of {l/v/a}only.")
-'''
 if valid_partial_mode == 0:
     args.vonly = args.aonly = True
 elif valid_partial_mode != 1:
@@ -124,7 +113,7 @@ if torch.cuda.is_available():
 
 ####################################################################
 #
-# Load the dataset (aligned or non-aligned)
+# Load the dataset 
 #
 ####################################################################
 
@@ -180,8 +169,6 @@ valid_loader = DataLoader(valid_data, batch_size=args.batch_size, shuffle=True, 
 test_loader = DataLoader(test_data, batch_size=args.batch_size, shuffle=True, drop_last=True, collate_fn=test_data.collater)
 
 print('Finish loading the data....')
-#if not args.aligned:
-    #print("### Note: You are running in unaligned mode.")
 
 ####################################################################
 #
@@ -190,13 +177,10 @@ print('Finish loading the data....')
 ####################################################################
 
 hyp_params = args
-#hyp_params.orig_d_l, hyp_params.orig_d_a, hyp_params.orig_d_v = train_data.get_dim()
-#hyp_params.l_len, hyp_params.a_len, hyp_params.v_len = train_data.get_seq_len()
 hyp_params.layers = args.nlevels
 hyp_params.use_cuda = use_cuda
 hyp_params.dataset = dataset
 hyp_params.when = args.when
-#hyp_params.batch_chunk = args.batch_chunk
 hyp_params.n_train, hyp_params.n_valid, hyp_params.n_test = len(train_data), len(valid_data), len(test_data)
 hyp_params.model = str.upper(args.model.strip())
 hyp_params.output_dim = output_dim_dict[dataset]
