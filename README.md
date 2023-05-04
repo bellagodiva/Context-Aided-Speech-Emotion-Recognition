@@ -7,4 +7,9 @@ Achieves SOTA results on IEMOCAP Speech Emotion Recognition for speaker independ
 ## Results
 <img src="https://github.com/bellagodiva/Context-Aided-Speech-Emotion-Recognition/blob/161a4457faa3ad5e803d5c4303d4ba96ca4cb8c8/results.png" width=920>
 
+## Code
+main_transcription.py for transcription context
 
+main_acoustic_transcription.py for acoustic+transcription
+
+change num past utterances in dataset.py to include N past utterances as context
