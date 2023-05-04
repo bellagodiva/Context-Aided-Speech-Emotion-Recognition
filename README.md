@@ -12,4 +12,4 @@ main_transcription.py for transcription context
 
 main_acoustic_transcription.py for acoustic+transcription
 
-change num past utterances in dataset.py to include N past utterances as context
+input default value for num past utterances (num_past_utterance=N) in src/at_dataset.py or dataset.py to include N past utterances as context
