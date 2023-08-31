@@ -8,10 +8,10 @@ This paper proposes a novel speech emotion recognition sys- tem in a speech conv
 
 
 ## Model
-<img src="https://github.com/bellagodiva/Context-Aided-Speech-Emotion-Recognition/blob/973407b9e191da28237a47159ada4d9feeeceb0c/models.png" width=520>
+<img src="https://github.com/bellagodiva/Context-Aided-Speech-Emotion-Recognition/blob/973407b9e191da28237a47159ada4d9feeeceb0c/models.png" width=820>
 
 ## Results
-<img src="https://github.com/bellagodiva/Context-Aided-Speech-Emotion-Recognition/blob/161a4457faa3ad5e803d5c4303d4ba96ca4cb8c8/results.png" width=920>
+<img src="https://github.com/bellagodiva/Context-Aided-Speech-Emotion-Recognition/blob/bbfbca1a1e8d45f6365a0e4bb7b9dc175577fc3a/results.png" width=420>
 
 ## Code
 main_transcription.py for transcription context
