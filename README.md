@@ -8,7 +8,7 @@ This paper proposes a novel speech emotion recognition sys- tem in a speech conv
 
 
 ## Model
-<img src="models.png" width=520>
+<img src="https://github.com/bellagodiva/Context-Aided-Speech-Emotion-Recognition/blob/973407b9e191da28237a47159ada4d9feeeceb0c/models.png" width=520>
 
 ## Results
 <img src="https://github.com/bellagodiva/Context-Aided-Speech-Emotion-Recognition/blob/161a4457faa3ad5e803d5c4303d4ba96ca4cb8c8/results.png" width=920>
